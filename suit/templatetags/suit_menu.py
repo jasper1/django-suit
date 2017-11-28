@@ -100,15 +100,20 @@ class Menu(object):
         self.conf_icons = get_config('MENU_ICONS')
         self.conf_menu_order = get_config('MENU_ORDER')
         self.conf_menu = get_config('MENU')
+        self.conf_menu_append = get_config('MENU_APPEND')
 
     def get_app_list(self):
         menu = None
+
         if self.conf_menu:
             menu = self.make_menu(self.conf_menu)
         elif self.conf_menu_order:
             menu = self.make_menu_from_old_format(self.conf_menu_order)
         else:
             menu = self.make_menu_from_native_only()
+
+        if self.conf_menu_append:
+            menu += self.make_menu(self.conf_menu_append)
 
         # Add icons and match active
         if menu:
